@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="recipe.RecipeDescDAO" >
+
+<select id="getDescOne" resultType="recipedescVO">
+	select * from rec_desc where recipe_no = #{recipe_no}
+</select>
+
+<insert id="addDesc">
+	insert into rec_desc (recipe_desc, recipe_desc1, recipe_desc2, recipe_desc3, recipe_desc4, recipe_desc5, recipe_desc6, recipe_desc7, recipe_desc8, recipe_desc9, recipe_desc10)
+	 values(#{recipe_desc}, #{recipe_desc1}, #{recipe_desc2}, #{recipe_desc3}, #{recipe_desc4}, #{recipe_desc5}, #{recipe_desc6}, #{recipe_desc7}, #{recipe_desc8}, #{recipe_desc9}, #{recipe_desc10} )
+</insert>
+
+<delete id="deleteDesc">
+	delete from rec_desc where recipe_no = #{recipe_no}
+</delete>
+<update id="modifyDesc">
+	update rec_desc set recipe_desc = #{recipe_desc}, recipe_desc1 = #{recipe_desc1}, recipe_desc2 = #{recipe_desc2}, 
+	recipe_desc3 = #{recipe_desc3}, recipe_desc4 = #{recipe_desc4}, recipe_desc5 = #{recipe_desc5}, recipe_desc6 = #{recipe_desc6},
+	recipe_desc7 = #{recipe_desc7}, recipe_desc8 = #{recipe_desc8}, recipe_desc9 = #{recipe_desc9}, recipe_desc10 = #{recipe_desc10}
+	where recipe_no = #{recipe_no}
+</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

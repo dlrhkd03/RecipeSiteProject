@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice.NoticeDAO" >
+
+<select id="noticelist" resultType="noticeVO">
+ 	select * from notice order by notice_no asc
+</select>
+ 
+<select id="noticeone" resultType="noticeVO" parameterType="int"> 
+	select * from notice where notice_no=#{notice_no}
+</select>
+
+<select id="searchnoticelist" resultType="noticeVO" parameterType="String"> 
+	select * from notice where notice_title="'%"#{search}"%'"
+</select>
+
+<update id="modifynotice" parameterType="noticeVO">
+	update notice 
+    set notice_title = #{notice_title}, notice_desc = #{notice_desc}, notice_file = #{notice_file} 
+    where notice_no = #{notice_no}
+</update>
+
+<update id="clicknotice" parameterType="int">
+	update notice set notice_hits = notice_hits + 1 where notice_no=#{notice_no}
+</update>
+
+<insert id="writenotice" parameterType="noticeVO">
+	insert into notice (user_no, notice_date, notice_title, notice_desc, notice_file, notice_hits) 
+	values(#{user_no}, sysdate(), #{notice_title}, #{notice_desc}, #{notice_file}, 0)
+</insert>
+
+<delete id="deletenotice" parameterType="int">
+	delete from notice where notice_no = #{notice_no}
+</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+

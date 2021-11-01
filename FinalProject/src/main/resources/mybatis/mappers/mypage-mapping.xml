@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mypage.MypageDAO" >
+
+<insert id="addZzimRecipe"  parameterType="myzzimVO">
+	insert into zzim_recipe (recipe_no, user_no) values(#{recipe_no}, #{user_no})
+</insert>
+
+<!-- 찜 여부 확인 -->
+<select id="getZzimOne" resultType="myzzimVO" parameterType="int">
+	select * from zzim_recipe where user_no = #{user_no} and recipe_no = #{recipe_no} 
+</select>
+
+<select id="getMyZzimRecipeList" resultType="myrecipeVO" parameterType="int">
+select recipe_no, user_no, recipe_date, recipe_title, recipe_name, recipe_nation, recipe_img, recipe_hits 
+from recipe 
+where recipe_no in (select recipe_no from zzim_recipe where user_no = #{user_no}) 
+order by recipe_no asc
+</select>
+
+<select id="getMyRecipeList" resultType="myrecipeVO" parameterType="int">
+select recipe_no, user_no, recipe_date, recipe_title, recipe_name, recipe_nation, recipe_img, recipe_hits 
+from recipe 
+where user_no = #{user_no} 
+order by recipe_no asc
+</select>
+
+<select id="getMyZzimRecipeListDesc" resultType="myrecipeVO" parameterType="mynationVO">
+select recipe_no, user_no, recipe_date, recipe_title, recipe_name, recipe_nation, recipe_img, recipe_hits 
+from recipe 
+where recipe_nation = #{recipe_nation} and recipe_no in (select recipe_no from zzim_recipe where user_no = #{user_no}) 
+order by recipe_no asc
+</select>
+
+<select id="getMyRecipeListDesc" resultType="myrecipeVO" parameterType="mynationVO">
+select recipe_no, user_no, recipe_date, recipe_title, recipe_name, recipe_nation, recipe_img, recipe_hits 
+from recipe 
+where recipe_nation = #{recipe_nation} and user_no = #{user_no} 
+order by recipe_no asc
+</select>
+
+<delete id="deleteZzimRecipeOne" parameterType="int">
+delete from zzim_recipe where recipe_no = #{recipe_no} and user_no = #{user_no}
+</delete>
+
+<select id="getMainRecipeSearch" resultType="myrecipeVO" parameterType="String">
+select a.recipe_no, a.user_no, a.recipe_date, a.recipe_title, a.recipe_name, a.recipe_nation, a.recipe_img, a.recipe_hits 
+from recipe a left join rec_desc b on a.recipe_no = b.recipe_no
+where a.recipe_title like CONCAT('%',#{keyword},'%') or a.recipe_name like CONCAT('%',#{keyword},'%') or a.recipe_ingredient like CONCAT('%',#{keyword},'%') or a.recipe_nation like CONCAT('%',#{keyword},'%') or b.recipe_desc like CONCAT('%',#{keyword},'%')   
+order by a.recipe_hits asc limit 3
+</select>
+
+<select id="getMainRecipePopular" resultType="myrecipeVO">
+select recipe_no, user_no, recipe_date, recipe_title, recipe_name, recipe_nation, recipe_img, recipe_hits 
+from recipe 
+order by recipe_hits desc limit 10
+</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <!-- mybatis db 연결정보 세팅 파일 -->
+<configuration>
+<!-- 1. sql 실행 결과 UserVO 매핑 -->
+<typeAliases>
+ 	<typeAlias type="main.UserVO" alias="userVO" />
+ 	<typeAlias type="recipe.RecipeVO" alias="recipeVO" />
+ 	<typeAlias type="recipe.RecipeImgVO" alias="recipeimgVO"/>
+ 	<typeAlias type="recipe.RecipeDescVO" alias="recipedescVO"/>
+ 	<typeAlias type="notice.NoticeVO" alias="noticeVO"/>
+ 	<typeAlias type="admin.AdminVO" alias="adminVO"/>
+ 	<typeAlias type="mypage.MynationVO" alias="mynationVO"/>
+ 	<typeAlias type="mypage.MyrecipeVO" alias="myrecipeVO"/>
+ 	<typeAlias type="mypage.MyzzimVO" alias="myzzimVO"/>
+ 	<typeAlias type="ingredient.IngredientVO" alias="ingredientVO"/>
+</typeAliases>
+
+</configuration>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="recipe.RecipeImgDAO" >
+
+<select id="getImgOne" resultType="recipeimgVO">
+	select * from rec_imgs where recipe_no=#{recipe_no}
+</select>
+
+<insert id="addImg">
+	insert into rec_imgs (recipe_img1, recipe_img2, recipe_img3, recipe_img4,
+	 recipe_img5, recipe_img6, recipe_img7, recipe_img8, recipe_img9, recipe_img10) 
+	 values(#{recipe_img1}, #{recipe_img2}, #{recipe_img3}, #{recipe_img4},
+	 #{recipe_img5}, #{recipe_img6}, #{recipe_img7}, #{recipe_img8}, #{recipe_img9}, #{recipe_img10})
+</insert>
+<delete id="deleteImg">
+	delete from rec_imgs where recipe_no = #{recipe_no}
+</delete>
+<update id="modifyImg">
+	update rec_imgs set recipe_img1 = #{recipe_img1}, recipe_img2 = #{recipe_img2}, recipe_img3 = #{recipe_img3},
+	recipe_img4 = #{recipe_img4}, recipe_img5 = #{recipe_img5}, recipe_img6 = #{recipe_img6}, 
+	recipe_img7 = #{recipe_img7}, recipe_img8 = #{recipe_img8}, recipe_img9 = #{recipe_img9},
+	recipe_img10 = #{recipe_img10}
+	 where recipe_no = #{recipe_no}
+</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

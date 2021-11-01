@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="recipe.RecipeDAO" >
+
+<select id="getRecipeList" resultType="recipeVO">
+	select * from recipe
+</select>
+<select id="moreRecipeList" resultType="recipeVO">
+	SELECT *
+	FROM (
+	SELECT @ROWNUM := @ROWNUM + 1 AS r, recipe.*
+	FROM recipe, (SELECT @ROWNUM := 0) R
+	order by recipe_no desc
+	) A
+	where r between #{number} - 5 and #{number} and recipe_nation=#{nation} and recipe_emotion=#{emotion} and recipe_cate=#{cate} and recipe_title=#{search}
+</select>
+<select id="getCateRecipeList" resultType="recipeVO">
+	SELECT *
+	FROM (
+	SELECT @ROWNUM := @ROWNUM + 1 AS r, recipe.*
+	FROM recipe, (SELECT @ROWNUM := 0) R
+	order by recipe_no desc
+	) A
+	where r between #{number} - 5 and #{number} and 
+	recipe_emotion like #{emotion} and recipe_cate like #{cate} and recipe_nation like #{nation}
+</select>
+<select id="SearchTitle" resultType="recipeVO">
+	SELECT *
+	FROM (
+	SELECT @ROWNUM := @ROWNUM + 1 AS r, recipe.*
+	FROM recipe, (SELECT @ROWNUM := 0) R
+	order by recipe_no desc
+	) A
+	where r between #{number} - 5 and #{number} and recipe_title like #{search} and 
+	recipe_emotion like #{emotion} and recipe_cate like #{cate} and recipe_nation like #{nation}
+</select>
+<select id="SearchName" resultType="recipeVO">
+	SELECT *
+	FROM (
+	SELECT @ROWNUM := @ROWNUM + 1 AS r, recipe.*
+	FROM recipe, (SELECT @ROWNUM := 0) R
+	order by recipe_no desc
+	) A
+	where r between #{number} - 5 and #{number} and recipe_desc like #{search} and 
+	recipe_emotion like #{emotion} and recipe_cate like #{cate} and recipe_nation like #{nation}
+</select>
+<select id="SearchIngredient" resultType="recipeVO">
+	SELECT *
+	FROM (
+	SELECT @ROWNUM := @ROWNUM + 1 AS r, recipe.*
+	FROM recipe, (SELECT @ROWNUM := 0) R
+	order by recipe_no desc
+	) A
+	where r between #{number} - 5 and #{number} and recipe_Ingredient like #{search} and 
+	recipe_emotion like #{emotion} and recipe_cate like #{cate} and recipe_nation like #{nation}
+</select>
+<insert id="addRecipe" parameterType="recipeVO">
+	insert into recipe (user_no, recipe_hits, recipe_date, recipe_img, recipe_title, recipe_name, recipe_ingredient,
+	recipe_emotion, recipe_cate, recipe_nation) values(#{user_no}, 0, Date_FORMAT(now(), '%y-%m-%d %H:%i:%s'), #{recipe_img}, #{recipe_title}, #{recipe_name}, #{recipe_ingredient},
+	#{recipe_emotion}, #{recipe_cate}, #{recipe_nation})
+</insert>
+<select id="getRecipeDetail" resultType="recipeVO">
+	select * from recipe where recipe_no = #{no}
+</select>
+<delete id="deleteRecipe">
+	delete from recipe where recipe_no = #{recipe_no}
+</delete>
+<update id="modifyRecipe">
+	update recipe set recipe_img = #{recipe_img}, recipe_title=#{recipe_title}, recipe_name=#{recipe_name}, 
+	recipe_ingredient=#{recipe_ingredient},	recipe_emotion=#{recipe_emotion}, recipe_cate=#{recipe_cate}, 
+	recipe_nation=#{recipe_nation} 
+	where recipe_no = #{recipe_no}
+</update>
+
+<update id="raiseRecipeHits">
+	update recipe set recipe_hits = recipe_hits + 1 where recipe_no = #{no}
+</update>
+<select id="findRecipe" resultType="recipeVO">
+	select * from recipe
+	where recipe_emotion like #{emotion} and recipe_nation like #{nation} and recipe_cate like #{cate}
+	order by recipe_hits desc limit 3
+</select>
+
+<!-- <select id="findRecipe"  resultType="recipeVO" parameterType="String[]">
+ 	select * from recipe
+ 	where recipe_emotion like #{emotion} and recipe_cate like #{cate} and recipe_nation like #{nation} and 
+ 	<foreach collection="array" item="not_eat" separator="and"  >
+ 		recipe_ingredient not like #{not_eat}
+ 	</foreach>
+</select>
+ -->
+<!-- 
+<select id="emplist" resultType="empVO">
+ select * from employees
+</select>
+
+ 
+<select id="empone" resultType="empVO" parameterType="int"> 
+select * from employees where employee_id=#{id}
+</select>
+
+<insert id="insertemp" parameterType="empVO" >
+insert into employees(employee_id, first_name, last_name, email, phone_number, job_id , hire_date) 
+values( #{employee_id}, #{first_name}, #{last_name},#{email},#{phone_number},#{job_id} , sysdate )
+</insert>
+
+<update id="updateemp" parameterType="empVO">
+update employees
+set last_name = #{last_name} ,  department_id=#{department_id}
+where employee_id= #{employee_id}
+
+</update>
+
+<delete id="deleteemp" parameterType="String">
+delete employees where last_name like #{name}
+</delete>
+
+<select id="cnt" resultType="int">
+select count(*) from employees
+</select>
+
+<select id="empdeptlist"  resultType="empVO" parameterType="int[]">
+ select * from employees where department_id in 
+ 	<foreach collection="array" item="d_list" open="(" close=")" separator=","  >
+ 		#{d_list}
+ 	</foreach>
+</select>
+-->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
